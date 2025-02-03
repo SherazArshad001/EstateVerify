@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:real_estate_app/feature/auth/presentation/pages/login_page.dart';
 import 'package:real_estate_app/feature/auth/presentation/pages/signup_page.dart';
+import 'package:real_estate_app/feature/homepage/presentation/pages/homepge.dart';
 
 class AppRouter {
   static final GoRouter router = GoRouter(
@@ -13,6 +14,10 @@ class AppRouter {
       GoRoute(
         path: '/signup',
         builder: (context, state) => const SignupPage(),
+      ),
+      GoRoute(
+        path: '/home',
+        builder: (context, state) => const HomePage(),
       ),
     ],
   );

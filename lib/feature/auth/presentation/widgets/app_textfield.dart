@@ -6,6 +6,7 @@ class AppAuthTextField extends StatelessWidget {
   final TextEditingController? controller;
   final TextInputType? keyboardType;
   final bool obscureText;
+  final String? Function(String?)? validator;
 
   const AppAuthTextField({
     super.key,
@@ -13,9 +14,13 @@ class AppAuthTextField extends StatelessWidget {
     this.controller,
     this.keyboardType,
     this.obscureText = false,
+    this.validator,
   });
-  OutlineInputBorder _border(
-      {Color color = AppPallete.borderColor, double width = 1.5}) {
+
+  OutlineInputBorder _border({
+    Color color = AppPallete.borderColor,
+    double width = 1.5,
+  }) {
     return OutlineInputBorder(
       borderRadius: BorderRadius.circular(10),
       borderSide: BorderSide(color: color, width: width),
@@ -28,10 +33,13 @@ class AppAuthTextField extends StatelessWidget {
       controller: controller,
       keyboardType: keyboardType,
       obscureText: obscureText,
+      validator: validator,
       decoration: InputDecoration(
         hintText: hintText,
         enabledBorder: _border(),
         focusedBorder: _border(color: AppPallete.btnColor),
+        errorBorder: _border(color: AppPallete.errorColor),
+        focusedErrorBorder: _border(color: AppPallete.errorColor),
         contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 25),
       ),
     );
