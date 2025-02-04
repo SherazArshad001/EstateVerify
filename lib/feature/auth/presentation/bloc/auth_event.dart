@@ -24,3 +24,6 @@ class SignupEvent extends AuthEvent {
     required this.password,
   });
 }
+class LogoutEvent extends AuthEvent{
+  
+}

@@ -18,10 +18,9 @@ class AuthRichText extends StatelessWidget {
   Widget build(BuildContext context) {
     return RichText(
       text: TextSpan(
-        style: TextStyle(
-          color: Colors.black,
-          fontSize: 16,
-        ),
+        style: DefaultTextStyle.of(context).style.copyWith(
+              fontSize: 16,
+            ),
         children: [
           TextSpan(text: text),
           TextSpan(

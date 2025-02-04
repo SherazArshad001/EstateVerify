@@ -13,3 +13,5 @@ class AuthFailure extends AuthState {
 
   AuthFailure({required this.error});
 }
+
+
