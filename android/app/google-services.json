@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "368595359520",
+    "project_id": "estateverify-bbe12",
+    "storage_bucket": "estateverify-bbe12.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:368595359520:android:11be4fb06ff03531d9e945",
+        "android_client_info": {
+          "package_name": "com.example.real_estate_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyArfifAxeSi_TvNzs6XCW37eC6_vTJ0UCQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

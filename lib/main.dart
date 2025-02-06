@@ -1,12 +1,17 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:real_estate_app/config/routes/go_router.dart';
-import 'package:real_estate_app/core/theme/app_pallet.dart';
 import 'package:real_estate_app/core/theme/theme.dart';
 import 'package:real_estate_app/feature/auth/presentation/bloc/auth_bloc.dart';
 import 'package:real_estate_app/feature/homepage/presentation/bloc/homepage_bloc.dart';
+import 'package:real_estate_app/firebase_options.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
