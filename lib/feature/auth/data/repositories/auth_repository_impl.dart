@@ -1,5 +1,4 @@
 import 'package:fpdart/fpdart.dart';
-
 import 'package:real_estate_app/core/error/failure.dart';
 import 'package:real_estate_app/feature/auth/data/datasource/auth_remote_data_source.dart';
 import 'package:real_estate_app/feature/auth/domain/entity/user_entity.dart';
@@ -7,6 +6,7 @@ import 'package:real_estate_app/feature/auth/domain/repositories/auth_repository
 
 class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource authRemoteDataSource;
+
   const AuthRepositoryImpl({
     required this.authRemoteDataSource,
   });
@@ -16,10 +16,16 @@ class AuthRepositoryImpl implements AuthRepository {
     required String email,
     required String password,
   }) async {
-    return await authRemoteDataSource.logInWithEmailPassword(
+    final result = await authRemoteDataSource.logInWithEmailPassword(
       email: email,
       password: password,
     );
+
+    return result.map((userModel) => UserEntity(
+          id: userModel.id,
+          name: userModel.name,
+          email: userModel.email,
+        ));
   }
 
   @override
@@ -34,9 +40,10 @@ class AuthRepositoryImpl implements AuthRepository {
       password: password,
     );
 
-    return result.fold(
-      (failure) => left(failure),
-      (user) => right(user),
-    );
+    return result.map((userModel) => UserEntity(
+          id: userModel.id,
+          name: userModel.name,
+          email: userModel.email,
+        ));
   }
 }
