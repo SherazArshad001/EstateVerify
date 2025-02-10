@@ -18,7 +18,7 @@ class AppAuthTextField extends StatelessWidget {
   });
 
   OutlineInputBorder _border({
-    Color color = AppPallete.borderColor,
+    Color color = AppPalette.borderColor,
     double width = 1.5,
   }) {
     return OutlineInputBorder(
@@ -37,9 +37,9 @@ class AppAuthTextField extends StatelessWidget {
       decoration: InputDecoration(
         hintText: hintText,
         enabledBorder: _border(),
-        focusedBorder: _border(color: AppPallete.btnColor),
-        errorBorder: _border(color: AppPallete.errorColor),
-        focusedErrorBorder: _border(color: AppPallete.errorColor),
+        focusedBorder: _border(color: AppPalette.btnColor),
+        errorBorder: _border(color: AppPalette.errorColor),
+        focusedErrorBorder: _border(color: AppPalette.errorColor),
         contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 25),
       ),
     );

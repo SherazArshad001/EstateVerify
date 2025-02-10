@@ -13,7 +13,7 @@ class AuthButton extends StatelessWidget {
     super.key,
     required this.text,
     required this.onPressed,
-    this.color = AppPallete.btnColor,
+    this.color = AppPalette.btnColor,
     this.borderRadius = 10.0,
     this.height = 55.0,
     this.width = double.infinity,
@@ -35,9 +35,10 @@ class AuthButton extends StatelessWidget {
         child: Text(
           text,
           style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: AppPallete.whiteColor),
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            color: AppPalette.textSecondary,
+          ),
         ),
       ),
     );

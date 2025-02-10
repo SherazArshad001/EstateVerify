@@ -27,7 +27,7 @@ class AuthRichText extends StatelessWidget {
             text: tappableText,
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              color: AppPallete.btnColor,
+              color: AppPalette.btnColor,
             ),
             recognizer: TapGestureRecognizer()..onTap = onTap,
           ),
