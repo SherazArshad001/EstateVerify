@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:real_estate_app/core/theme/app_pallet.dart';
+import 'package:real_estate_app/core/utils/text.dart';
 
 class EstateVerifyAppBar extends StatelessWidget
     implements PreferredSizeWidget {
@@ -13,7 +14,7 @@ class EstateVerifyAppBar extends StatelessWidget
       backgroundColor: theme.colorScheme.surface,
       elevation: 0,
       title: const Text(
-        "EstateVerify",
+        AppTexts.appName,
         style: TextStyle(
           fontWeight: FontWeight.bold,
         ),

@@ -1,15 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fpdart/fpdart.dart';
-import 'package:real_estate_app/core/error/failure.dart';
 import 'package:real_estate_app/feature/auth/data/model/user_model.dart';
 
 abstract interface class AuthRemoteDataSource {
-  Future<Either<Failure, UserModel>> signUpWithEmailPassword({
+  Future<UserModel> signUpWithEmailPassword({
     required String name,
     required String email,
     required String password,
   });
-  Future<Either<Failure, UserModel>> logInWithEmailPassword({
+
+  Future<UserModel> logInWithEmailPassword({
     required String email,
     required String password,
   });
@@ -18,45 +17,48 @@ abstract interface class AuthRemoteDataSource {
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   final FirebaseAuth firebaseAuth;
 
-  AuthRemoteDataSourceImpl({
-    required this.firebaseAuth,
-  });
+  AuthRemoteDataSourceImpl({required this.firebaseAuth});
+
   @override
-  Future<Either<Failure, UserModel>> logInWithEmailPassword({
+  Future<UserModel> logInWithEmailPassword({
     required String email,
     required String password,
   }) async {
-    try {
-      final userCredential = await firebaseAuth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      final firebaseUser = userCredential.user!;
-      final user = UserModel.fromFirebase(firebaseUser);
-      return Right(user);
-    } catch (e) {
-      return Left(Failure(e.toString()));
+    final userCredential = await firebaseAuth.signInWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+    final firebaseUser = userCredential.user;
+    if (firebaseUser == null) {
+      throw Exception("Failed to log in");
     }
+    return UserModel.fromFirebase(firebaseUser);
   }
 
   @override
-  Future<Either<Failure, UserModel>> signUpWithEmailPassword({
+  Future<UserModel> signUpWithEmailPassword({
     required String name,
     required String email,
     required String password,
   }) async {
-    try {
-      final userCredential = await firebaseAuth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      await userCredential.user?.updateDisplayName(name);
-      await userCredential.user?.reload();
-      final firebaseUser = FirebaseAuth.instance.currentUser!;
-      final user = UserModel.fromFirebase(firebaseUser);
-      return Right(user);
-    } catch (e) {
-      return Left(Failure(e.toString()));
+    final userCredential = await firebaseAuth.createUserWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+    
+    final user = userCredential.user;
+    if (user == null) {
+      throw Exception("Failed to sign up");
     }
+
+    await user.updateDisplayName(name);
+    await user.reload();
+
+    final updatedUser = firebaseAuth.currentUser;
+    if (updatedUser == null) {
+      throw Exception("Failed to fetch updated user data");
+    }
+
+    return UserModel.fromFirebase(updatedUser);
   }
 }

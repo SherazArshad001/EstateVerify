@@ -9,38 +9,18 @@ import 'package:real_estate_app/feature/auth/data/repositories/auth_repository_i
 import 'package:real_estate_app/feature/auth/domain/usecases/user_sign_up.dart';
 import 'package:real_estate_app/feature/auth/presentation/bloc/auth_bloc.dart';
 import 'package:real_estate_app/feature/homepage/presentation/bloc/homepage_bloc.dart';
+import 'package:real_estate_app/feature/navigation/presentation/bloc/navigation_bloc.dart';
 import 'package:real_estate_app/firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  // ✅ Inject Dependencies
-  final authRepository = AuthRepositoryImpl(
-    authRemoteDataSource:
-        AuthRemoteDataSourceImpl(firebaseAuth: FirebaseAuth.instance),
-  );
-
-  final logInUseCase = LogInUseCase(authRepository: authRepository);
-  final signUpUseCase = SignUpUseCase(authRepository: authRepository);
-
-  runApp(MyApp(
-    logInUseCase: logInUseCase,
-    signUpUseCase: signUpUseCase,
-  ));
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final LogInUseCase logInUseCase;
-  final SignUpUseCase signUpUseCase;
-
-  const MyApp({
-    super.key,
-    required this.logInUseCase,
-    required this.signUpUseCase,
-  });
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -48,19 +28,32 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => AuthBloc(
-            logInUseCase: logInUseCase,
-            signUpUseCase: signUpUseCase,
+            logInUseCase: LogInUseCase(
+              authRepository: AuthRepositoryImpl(
+                authRemoteDataSource: AuthRemoteDataSourceImpl(
+                  firebaseAuth: FirebaseAuth.instance,
+                ),
+              ),
+            ),
+            signUpUseCase: SignUpUseCase(
+              authRepository: AuthRepositoryImpl(
+                authRemoteDataSource: AuthRemoteDataSourceImpl(
+                  firebaseAuth: FirebaseAuth.instance,
+                ),
+              ),
+            ),
           ),
         ),
         BlocProvider(create: (context) => HomepageBloc()),
+        BlocProvider(create: (context) => NavigationBloc()),
       ],
       child: MaterialApp.router(
-        routerConfig: AppRouter.router,
         debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
+        routerConfig: AppRouter.router,
+        title: 'Real Estate App',
         theme: AppTheme.lightTheme,
-  darkTheme: AppTheme.darkTheme,
-  themeMode: ThemeMode.system,
+        darkTheme: AppTheme.darkTheme,
+        themeMode: ThemeMode.system,
       ),
     );
   }

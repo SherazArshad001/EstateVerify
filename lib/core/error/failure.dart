@@ -1,5 +1,10 @@
-class Failure {
-  final String massage;
+import 'package:equatable/equatable.dart';
 
-  Failure([this.massage = " An unexpected error occurs"]);
+abstract class Failure extends Equatable {
+  final String message;
+
+  const Failure(this.message);
+
+  @override
+  List<Object> get props => [message];
 }
